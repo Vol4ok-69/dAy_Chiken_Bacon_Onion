@@ -1,13 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement; // нужно для загрузки сцены
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DiplomChoice : MonoBehaviour
 {
     public static DiplomChoice Instance;
-    public DiplomItem[] diplomaItems; // все дипломы на сцене
-    public GameObject backButton;     // кнопка "Назад"
-    public GameObject acceptButton;   // кнопка "Принять"
+    public DiplomItem[] diplomaItems;
+
+    [Header("UI кнопки")]
+    public GameObject backButton;
+    public GameObject acceptButton;
+
+    [Header("UI текст")]
+    public TMP_Text diplomaDesc;   // 🟢 сюда будем выводить описание
 
     private DiplomItem focusedDiploma;
 
@@ -15,41 +20,38 @@ public class DiplomChoice : MonoBehaviour
     {
         Instance = this;
 
-        // Кнопки скрыты по умолчанию
-        if (backButton != null)
-            backButton.SetActive(false);
-        if (acceptButton != null)
-            acceptButton.SetActive(false);
+        if (backButton != null) backButton.SetActive(false);
+        if (acceptButton != null) acceptButton.SetActive(false);
+
+        if (diplomaDesc != null) diplomaDesc.text = "";
     }
 
     public void SelectDiploma(DiplomItem diploma)
     {
-        // снимаем фокус с предыдущего
         if (focusedDiploma != null)
             focusedDiploma.Unfocus();
 
         focusedDiploma = diploma;
         focusedDiploma.Focus();
 
-        // Скрываем все остальные дипломы
         foreach (var item in diplomaItems)
         {
             if (item != diploma)
                 item.gameObject.SetActive(false);
         }
 
-        // Показываем кнопки
         if (backButton != null) backButton.SetActive(true);
         if (acceptButton != null) acceptButton.SetActive(true);
+
+        // 🟢 выводим описание в текстовый UI
+        if (diplomaDesc != null) diplomaDesc.text = diploma.description;
     }
 
     public void ResetSelection()
     {
-        // Снимаем фокус с выбранного
         if (focusedDiploma != null)
             focusedDiploma.Unfocus();
 
-        // Показываем все дипломы
         foreach (var item in diplomaItems)
         {
             item.gameObject.SetActive(true);
@@ -57,18 +59,18 @@ public class DiplomChoice : MonoBehaviour
 
         focusedDiploma = null;
 
-        // Скрываем кнопки
         if (backButton != null) backButton.SetActive(false);
         if (acceptButton != null) acceptButton.SetActive(false);
-    }
 
+        if (diplomaDesc != null) diplomaDesc.text = ""; // очищаем текст
+    }
     public void AcceptSelection()
     {
         if (focusedDiploma == null) return;
 
         Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
 
-       // Вставь название сцены, которую хочешь загрузить
+        // Замените "NextScene" на точное имя сцены, которую хотите загрузить
         SceneManager.LoadScene("SampleScene");
     }
 }

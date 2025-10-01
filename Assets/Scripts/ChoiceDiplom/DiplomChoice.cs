@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DiplomChoice : MonoBehaviour
 {
@@ -62,5 +63,14 @@ public class DiplomChoice : MonoBehaviour
         if (acceptButton != null) acceptButton.SetActive(false);
 
         if (diplomaDesc != null) diplomaDesc.text = ""; // очищаем текст
+    }
+    public void AcceptSelection()
+    {
+        if (focusedDiploma == null) return;
+
+        Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
+
+        // Замените "NextScene" на точное имя сцены, которую хотите загрузить
+        SceneManager.LoadScene("SampleScene");
     }
 }

@@ -1,11 +1,13 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; // РЅСѓР¶РЅРѕ РґР»СЏ Р·Р°РіСЂСѓР·РєРё СЃС†РµРЅС‹
 
 public class DiplomChoice : MonoBehaviour
 {
     public static DiplomChoice Instance;
-    public DiplomItem[] diplomaItems; // все дипломы на сцене
-    public GameObject backButton;     // кнопка "Назад"
+    public DiplomItem[] diplomaItems; // РІСЃРµ РґРёРїР»РѕРјС‹ РЅР° СЃС†РµРЅРµ
+    public GameObject backButton;     // РєРЅРѕРїРєР° "РќР°Р·Р°Рґ"
+    public GameObject acceptButton;   // РєРЅРѕРїРєР° "РџСЂРёРЅСЏС‚СЊ"
 
     private DiplomItem focusedDiploma;
 
@@ -13,39 +15,41 @@ public class DiplomChoice : MonoBehaviour
     {
         Instance = this;
 
-        // Кнопка скрыта по умолчанию
+        // РљРЅРѕРїРєРё СЃРєСЂС‹С‚С‹ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
         if (backButton != null)
             backButton.SetActive(false);
+        if (acceptButton != null)
+            acceptButton.SetActive(false);
     }
 
     public void SelectDiploma(DiplomItem diploma)
     {
-        // снимаем фокус с предыдущего
+        // СЃРЅРёРјР°РµРј С„РѕРєСѓСЃ СЃ РїСЂРµРґС‹РґСѓС‰РµРіРѕ
         if (focusedDiploma != null)
             focusedDiploma.Unfocus();
 
         focusedDiploma = diploma;
         focusedDiploma.Focus();
 
-        // Скрываем все остальные дипломы
+        // РЎРєСЂС‹РІР°РµРј РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ РґРёРїР»РѕРјС‹
         foreach (var item in diplomaItems)
         {
             if (item != diploma)
                 item.gameObject.SetActive(false);
         }
 
-        // Показываем кнопку "Назад"
-        if (backButton != null)
-            backButton.SetActive(true);
+        // РџРѕРєР°Р·С‹РІР°РµРј РєРЅРѕРїРєРё
+        if (backButton != null) backButton.SetActive(true);
+        if (acceptButton != null) acceptButton.SetActive(true);
     }
 
     public void ResetSelection()
     {
-        // Снимаем фокус с выбранного
+        // РЎРЅРёРјР°РµРј С„РѕРєСѓСЃ СЃ РІС‹Р±СЂР°РЅРЅРѕРіРѕ
         if (focusedDiploma != null)
             focusedDiploma.Unfocus();
 
-        // Показываем все дипломы
+        // РџРѕРєР°Р·С‹РІР°РµРј РІСЃРµ РґРёРїР»РѕРјС‹
         foreach (var item in diplomaItems)
         {
             item.gameObject.SetActive(true);
@@ -53,11 +57,18 @@ public class DiplomChoice : MonoBehaviour
 
         focusedDiploma = null;
 
-        // Скрываем кнопку "Назад"
-        if (backButton != null)
-            backButton.SetActive(false);
+        // РЎРєСЂС‹РІР°РµРј РєРЅРѕРїРєРё
+        if (backButton != null) backButton.SetActive(false);
+        if (acceptButton != null) acceptButton.SetActive(false);
+    }
 
-        // Можно скрыть UI с информацией о дипломе
-        // DiplomaUI.Instance.HideInfo();
+    public void AcceptSelection()
+    {
+        if (focusedDiploma == null) return;
+
+        Debug.Log("РџСЂРёРЅСЏС‚ РґРёРїР»РѕРј: " + focusedDiploma.diplomaName);
+
+       // Р’СЃС‚Р°РІСЊ РЅР°Р·РІР°РЅРёРµ СЃС†РµРЅС‹, РєРѕС‚РѕСЂСѓСЋ С…РѕС‡РµС€СЊ Р·Р°РіСЂСѓР·РёС‚СЊ
+        SceneManager.LoadScene("SampleScene");
     }
 }

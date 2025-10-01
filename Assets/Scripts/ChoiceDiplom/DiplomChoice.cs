@@ -71,6 +71,6 @@ public class DiplomChoice : MonoBehaviour
         Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
 
         // Замените "NextScene" на точное имя сцены, которую хотите загрузить
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SkillStart");
     }
 }

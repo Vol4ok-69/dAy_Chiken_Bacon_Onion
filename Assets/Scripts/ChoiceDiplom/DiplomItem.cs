@@ -1,13 +1,14 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class DiplomItem : MonoBehaviour
 {
-    [Header("Данные диплома")]
+    [Header("Р”Р°РЅРЅС‹Рµ РґРёРїР»РѕРјР°")]
     public string diplomaName;
     public Sprite icon;
-    public string[] startingSkills;
+    [TextArea(3, 6)] public string description; // рџџў РѕРїРёСЃР°РЅРёРµ РґРёРїР»РѕРјР°
 
-    [Header("Анимация")]
+
+    [Header("РђРЅРёРјР°С†РёСЏ")]
     public Transform focusPoint;
     private Vector3 originalPosition;
     private Vector3 originalScale;
@@ -23,15 +24,15 @@ public class DiplomItem : MonoBehaviour
 
     void Update()
     {
-        // Плавное приближение к focusPoint
+        // РџР»Р°РІРЅРѕРµ РїСЂРёР±Р»РёР¶РµРЅРёРµ Рє focusPoint
         Vector3 targetPos = isFocused ? focusPoint.position : originalPosition;
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * moveSpeed);
 
-        // Плавное масштабирование
+        // РџР»Р°РІРЅРѕРµ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёРµ
         Vector3 targetScale = isFocused ? originalScale * 1.5f : originalScale;
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
 
-        // Проверка клика через Physics2D.Raycast
+        // РџСЂРѕРІРµСЂРєР° РєР»РёРєР° С‡РµСЂРµР· Physics2D.Raycast
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -46,7 +47,7 @@ public class DiplomItem : MonoBehaviour
     public void OnClick()
     {
         DiplomChoice.Instance.SelectDiploma(this);
-        Debug.Log("Выбран диплом: " + diplomaName);
+        Debug.Log("Р’С‹Р±СЂР°РЅ РґРёРїР»РѕРј: " + diplomaName);
         Focus();
     }
 

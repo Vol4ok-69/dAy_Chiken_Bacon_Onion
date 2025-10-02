@@ -6,7 +6,18 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance;
 
     private Dictionary<string, int> stats = new Dictionary<string, int>();
-    public int skillPoints = 0; 
+    public int GetTimePoints() => GetStat("TimePoints");
+    public bool TrySpendTimePoints(int amount)
+    {
+        int current = GetTimePoints();
+        if (current >= amount)
+        {
+            ChangeStat("TimePoints", -amount);
+            return true;
+        }
+        return false;
+    }
+    public int skillPoints = 0;
 
     void Awake()
     {
@@ -14,12 +25,19 @@ public class PlayerStats : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // Инициализация стартовых очков времени
+            if (!stats.ContainsKey("TimePoints"))
+                stats.Add("TimePoints", 300); // стартовое количество часов
+            if (!stats.ContainsKey("SkillPoints"))
+                stats.Add("SkillPoints", 0); // стартовые очки навыков, если нужны
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
 
     // Добавляем или обновляем значения в словаре
     public void AddOrUpdateStats(Dictionary<string, int> newStats)

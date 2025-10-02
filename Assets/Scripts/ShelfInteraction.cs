@@ -18,6 +18,7 @@ public class ShelfInteraction : MonoBehaviour
     private float popupTimer = 0f;
     private Vector3 popupStartPos;
 
+
     void Start()
     {
         if (popupText != null)
@@ -31,7 +32,19 @@ public class ShelfInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            GiveRandomSkills();
+            int spent = 1; // сколько тратим за нажатие
+            if (PlayerStats.Instance.TrySpendTimePoints(spent))
+            {
+                // Генерируем случайное увеличение навыков
+                PlayerStats.Instance.ChangeStat("Коммуникабельность", Random.Range(1, 4));
+                PlayerStats.Instance.ChangeStat("Интеллект", Random.Range(1, 4));
+                PlayerStats.Instance.ChangeStat("Харизма", Random.Range(1, 4));
+                Debug.Log("Очки потрачены, навыки увеличены!");
+            }
+            else
+            {
+                Debug.Log("Нет очков времени!");
+            }
         }
 
         if (isPopupActive && popupText != null)

@@ -6,6 +6,7 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance;
 
     private Dictionary<string, int> stats = new Dictionary<string, int>();
+    public int skillPoints = 0; 
 
     void Awake()
     {
@@ -51,5 +52,17 @@ public class PlayerStats : MonoBehaviour
     {
         if (stats.ContainsKey(statName))
             stats[statName] = Mathf.Clamp(stats[statName] + amount, 0, 100);
+    }
+
+    // Попытка прокачать (с проверкой очков)
+    public bool TryIncreaseStat(string statName)
+    {
+        if (skillPoints > 0 && stats.ContainsKey(statName))
+        {
+            stats[statName] = Mathf.Clamp(stats[statName] + 1, 0, 100);
+            skillPoints--;
+            return true;
+        }
+        return false;
     }
 }

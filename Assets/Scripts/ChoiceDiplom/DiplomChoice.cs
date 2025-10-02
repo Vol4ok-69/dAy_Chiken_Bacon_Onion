@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -66,11 +67,24 @@ public class DiplomChoice : MonoBehaviour
     }
     public void AcceptSelection()
     {
-        if (focusedDiploma == null) return;
+        if (focusedDiploma != null)
+        {
+            Dictionary<string, int> diplomaStats = new Dictionary<string, int>();
 
-        Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
+            foreach (var stat in focusedDiploma.startStats)
+            {
+                diplomaStats[stat.statName] = stat.value;
+            }
 
-        // Замените "NextScene" на точное имя сцены, которую хотите загрузить
-        SceneManager.LoadScene("SkillStart");
+            PlayerStats.Instance.SetStats(diplomaStats);
+
+            Debug.Log("Выбран диплом: " + focusedDiploma.diplomaName);
+            foreach (var kvp in diplomaStats)
+            {
+                Debug.Log(kvp.Key + " = " + kvp.Value);
+            }
+            SceneManager.LoadScene("SkillStart");
+        }
     }
 }
+

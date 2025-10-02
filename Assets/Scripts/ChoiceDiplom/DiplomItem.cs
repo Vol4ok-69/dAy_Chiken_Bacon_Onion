@@ -1,11 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
+[System.Serializable]
+public class StatValue
+{
+    public string statName;
+    public int value;
+}
 public class DiplomItem : MonoBehaviour
 {
     [Header("Данные диплома")]
     public string diplomaName;
     public Sprite icon;
-    [TextArea(3, 6)] public string description; 
+    [TextArea(3, 6)] public string description;
+
+    [Header("Стартовые параметры диплома")]
+    public List<StatValue> startStats = new List<StatValue>();
 
     [Header("Анимация")]
     public Transform focusPoint;

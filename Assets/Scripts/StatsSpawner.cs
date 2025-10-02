@@ -12,11 +12,11 @@ public class StatsSpawner : MonoBehaviour
     }
 
     [Header("Настройки")]
-    public List<StatData> statsData;
-    public GameObject statPrefab;
-    public Transform contentParent;
-    public TextMeshProUGUI pointsLeftText;
-    public int totalPoints = 20;
+    public List<StatData> statsData;          // список статов для этой сцены
+    public GameObject statPrefab;             // префаб UI для отдельной статы
+    public Transform contentParent;           // родительский объект для UI
+    public TextMeshProUGUI pointsLeftText;    // текст для оставшихся очков
+    public int totalPoints = 20;              // доступные очки
 
     [Header("Позиционирование")]
     public float startY = 0f;
@@ -24,6 +24,7 @@ public class StatsSpawner : MonoBehaviour
 
     void Start()
     {
+        // Спавним UI для каждой статы
         for (int i = 0; i < statsData.Count; i++)
         {
             StatData stat = statsData[i];
@@ -39,17 +40,49 @@ public class StatsSpawner : MonoBehaviour
             // Настройка StatUI
             StatUI ui = go.GetComponent<StatUI>();
             if (ui != null)
+            {
                 ui.Setup(stat.name, stat.value, this);
+                ui.statData = stat; // связываем с элементом statsData
+            }
             else
+            {
                 Debug.LogError("На префабе нет компонента StatUI!");
+            }
         }
 
         UpdatePointsUI();
     }
 
+    // Обновляем текст очков
     public void UpdatePointsUI()
     {
         if (pointsLeftText != null)
             pointsLeftText.text = $"Очки: {totalPoints}";
+    }
+
+    // Метод для изменения очков
+    public void ChangePoints(int amount)
+    {
+        totalPoints = Mathf.Clamp(totalPoints + amount, 0, 1000);
+        UpdatePointsUI();
+    }
+
+    // Сохраняем все значения в глобальный PlayerStats
+    public void SaveStatsToPlayer()
+    {
+        foreach (var stat in statsData)
+        {
+            PlayerStats.Instance.ChangeStat(stat.name, stat.value);
+        }
+
+        Debug.Log("Статы сцены добавлены в общую статистику игрока");
+    }
+
+    // Метод для кнопки "Принять"
+    public void OnAcceptButtonClicked()
+    {
+        SaveStatsToPlayer(); // сохраняем значения
+        // Переход на следующую сцену
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
     }
 }

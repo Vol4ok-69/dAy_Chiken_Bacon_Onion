@@ -429,6 +429,11 @@ MonoBehaviour:
     \u0432\u044B \u0441 \u0431\u043E\u043B\u044C\u0448\u0435\u0439 \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C
     \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 \u0440\u0430\u0431\u043E\u0442\u0443
     \u0432 \u0441\u0444\u0435\u0440\u0435 IT."
+  startStats:
+  - statName: "\u0421\u0442\u0440\u0435\u0441\u0441"
+    value: 60
+  - statName: "\u041C\u043E\u0442\u0438\u0432\u0430\u0446\u0438\u044F"
+    value: 20
   focusPoint: {fileID: 1333831550}
   hoverScaleFactor: 1.1
 --- !u!212 &440590509
@@ -560,6 +565,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!1 &443793082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 443793084}
+  - component: {fileID: 443793083}
+  m_Layer: 0
+  m_Name: PlayerStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &443793083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443793082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 545331e19ff7eab4ab91beeddd3669bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &443793084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443793082}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 792.9406, y: 648.85236, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464587452
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +650,11 @@ MonoBehaviour:
     \u0434\u0438\u043F\u043B\u043E\u043C, \u0432\u044B \u0441 \u0431\u043E\u043B\u044C\u0448\u0435\u0439
     \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C\u044E \u0441\u043C\u043E\u0436\u0435\u0442\u0435
     \u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0432 \u044E\u0440\u0438\u0441\u043F\u0443\u043D\u0434\u0435\u043D\u0446\u0438\u0438.\r\n"
+  startStats:
+  - statName: "\u0421\u0442\u0440\u0435\u0441\u0441"
+    value: 50
+  - statName: "\u041C\u043E\u0442\u0438\u0432\u0430\u0446\u0438\u044F "
+    value: 50
   focusPoint: {fileID: 1333831550}
   hoverScaleFactor: 1.1
 --- !u!212 &464587454
@@ -1004,6 +1058,11 @@ MonoBehaviour:
     \u0441\u043C\u043E\u0436\u0435\u0442\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C
     \u0432 \u0441\u0444\u0435\u0440\u0435 \u0430\u0433\u0440\u043E\u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0439
     \u0438 \u0440\u0430\u0441\u0442\u0435\u043D\u0438\u0435\u0432\u043E\u0434\u0441\u0442\u0432\u0430.\r\n"
+  startStats:
+  - statName: "\u0421\u0442\u0440\u0435\u0441\u0441"
+    value: 30
+  - statName: "\u041C\u043E\u0442\u0438\u0432\u0430\u0446\u0438\u044F"
+    value: 40
   focusPoint: {fileID: 1333831550}
   hoverScaleFactor: 1.1
 --- !u!212 &609491504
@@ -1603,3 +1662,4 @@ SceneRoots:
   - {fileID: 1151904598}
   - {fileID: 625353994}
   - {fileID: 496267208}
+  - {fileID: 443793084}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using UnityEngine.SceneManagement; // нужно для загрузки сцены
 
 public class DiplomChoice : MonoBehaviour
@@ -67,8 +68,6 @@ public class DiplomChoice : MonoBehaviour
         if (focusedDiploma == null) return;
 
         Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
-
-       // Вставь название сцены, которую хочешь загрузить
-        SceneManager.LoadScene("SampleScene");
+        
     }
 }

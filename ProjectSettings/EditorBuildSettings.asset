@@ -7,13 +7,25 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: 6f5ca6dd80fb0db4e8d05cb5372989be
   - enabled: 1
     path: Assets/Scenes/ChoiceDiplomScene.unity
     guid: 0a8cee8d85d66a34396bbf1f9e518761
   - enabled: 1
     path: Assets/Scenes/SkillStart.unity
     guid: 6b6ddfa462b50d742921d7f34179be45
+  - enabled: 1
+    path: Assets/Scenes/inhouse.unity
+    guid: 6cd10b6dd5d97f44c8545d0d4dede47e
+  - enabled: 1
+    path: Assets/Scenes/inlibrary.unity
+    guid: 0b10fe6554ea7fd418f4e8d01c64fa79
+  - enabled: 1
+    path: Assets/Scenes/ingym.unity
+    guid: 5bf5c43876adef54fbbf4527cd1de437
+  - enabled: 1
+    path: Assets/Scenes/ZZRU.unity
+    guid: cf05b89082d456a4491e30650048f30e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

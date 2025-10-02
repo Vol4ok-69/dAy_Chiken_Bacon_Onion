@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/VacancyPrefab.meta
+guid: 953f142bcfaf1ac4188db5002bc1e1dc
+========
+guid: 248cd7b1aa97e4f4c9b8e12b8cd7b622
+>>>>>>>> SceneAnimation:Assets/Prefabs/SceneTransition.meta
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

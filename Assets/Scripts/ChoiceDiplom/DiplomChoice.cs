@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
+
 
 public class DiplomChoice : MonoBehaviour
 {
@@ -72,10 +75,7 @@ public class DiplomChoice : MonoBehaviour
                 diplomaStats[stat.statName] = stat.value;
             }
 
-            // 🔹 сюда
-            PlayerStats.Instance.AddOrUpdateStats(diplomaStats);
-
-            SceneManager.LoadScene("SkillStart");
-        }
+        Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
+        }   
     }
 }

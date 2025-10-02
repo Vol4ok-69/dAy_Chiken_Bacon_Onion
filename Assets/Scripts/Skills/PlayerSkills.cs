@@ -6,7 +6,7 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance;
 
     private Dictionary<string, int> stats = new Dictionary<string, int>();
-    public int skillPoints = 0; // очки навыков
+    public int skillPoints = 0; 
 
     void Awake()
     {

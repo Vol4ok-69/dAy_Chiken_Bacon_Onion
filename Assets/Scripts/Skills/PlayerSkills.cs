@@ -6,9 +6,7 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance;
 
     private Dictionary<string, int> stats = new Dictionary<string, int>();
-
-    // Новое поле для очков навыков
-    public int skillPoints = 5; // стартовое количество очков для прокачки
+    public int skillPoints = 0; // очки навыков
 
     void Awake()
     {
@@ -23,17 +21,19 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // Добавляем или обновляем значения в словаре
     public void AddOrUpdateStats(Dictionary<string, int> newStats)
     {
         foreach (var kvp in newStats)
         {
             if (stats.ContainsKey(kvp.Key))
-                stats[kvp.Key] = kvp.Value;
+                stats[kvp.Key] = kvp.Value; // обновляем существующую стату
             else
-                stats.Add(kvp.Key, kvp.Value);
+                stats.Add(kvp.Key, kvp.Value); // добавляем новую
         }
     }
 
+    // Получить значение конкретной статы
     public int GetStat(string statName)
     {
         if (stats.ContainsKey(statName))
@@ -41,25 +41,28 @@ public class PlayerStats : MonoBehaviour
         return 0;
     }
 
+    // Получить все статы
     public Dictionary<string, int> GetAllStats()
     {
         return new Dictionary<string, int>(stats);
     }
 
+    // Изменить значение конкретной статы на amount
     public void ChangeStat(string statName, int amount)
     {
         if (stats.ContainsKey(statName))
             stats[statName] = Mathf.Clamp(stats[statName] + amount, 0, 100);
     }
 
-    // Новый метод: попытка увеличить навык только если есть очки
-    public bool TryIncreaseSkill(string statName)
+    // Попытка прокачать (с проверкой очков)
+    public bool TryIncreaseStat(string statName)
     {
-        if (skillPoints <= 0) return false; // нет очков — прокачка невозможна
-        if (!stats.ContainsKey(statName)) return false;
-
-        stats[statName]++;
-        skillPoints--;
-        return true;
+        if (skillPoints > 0 && stats.ContainsKey(statName))
+        {
+            stats[statName] = Mathf.Clamp(stats[statName] + 1, 0, 100);
+            skillPoints--;
+            return true;
+        }
+        return false;
     }
 }

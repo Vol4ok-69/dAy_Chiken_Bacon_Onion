@@ -10,22 +10,35 @@ public class SkillButtonUI : MonoBehaviour
 
     private string statName;
     private int statValue;
+    private bool isUpgradeable = true;
 
-    public void Setup(string name, int value)
+    public void Setup(string name, int value, bool canUpgrade = true)
     {
         statName = name;
         statValue = value;
+        isUpgradeable = canUpgrade;
 
         if (nameText != null) nameText.text = statName;
         if (valueText != null) valueText.text = statValue.ToString();
 
         plusButton.onClick.RemoveAllListeners();
-        plusButton.onClick.AddListener(OnPlusClicked);
+
+        if (isUpgradeable)
+        {
+            plusButton.interactable = true;
+            plusButton.onClick.AddListener(OnPlusClicked);
+        }
+        else
+        {
+            plusButton.interactable = false; // отключаем кнопку
+        }
     }
 
     private void OnPlusClicked()
     {
-        if (PlayerStats.Instance.TryIncreaseSkill(statName))
+        if (!isUpgradeable) return;
+
+        if (PlayerStats.Instance.TryIncreaseStat(statName))
         {
             statValue++;
             valueText.text = statValue.ToString();

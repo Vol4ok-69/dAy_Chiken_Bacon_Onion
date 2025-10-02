@@ -5,8 +5,8 @@ public class SkillsUI : MonoBehaviour
 {
     [Header("UI Настройки")]
     public GameObject panel;              // Панель для навыков
-    public Transform contentParent;       // Родитель для кнопок (должен быть внутри Canvas)
-    public GameObject skillButtonPrefab;  // Префаб кнопки навыка (Button + SkillButtonUI)
+    public RectTransform contentParent;   // Родитель для кнопок (должен быть внутри Canvas)
+    public GameObject skillButtonPrefab;  // Префаб кнопки навыка
 
     [Header("Смещение кнопок")]
     public float startY = 0f;
@@ -17,7 +17,7 @@ public class SkillsUI : MonoBehaviour
 
     void Start()
     {
-        if (panel == null) Debug.LogError("Panel не назначена!");
+        if (panel == null) Debug.LogError("Panel не назначена в SkillsUI!");
         if (contentParent == null) Debug.LogError("ContentParent не назначен!");
         if (skillButtonPrefab == null) Debug.LogError("SkillButtonPrefab не назначен!");
 
@@ -46,65 +46,35 @@ public class SkillsUI : MonoBehaviour
         ClearButtons();
 
         Dictionary<string, int> stats = PlayerStats.Instance.GetAllStats();
-        Debug.Log("=== Обновление UI навыков ===");
-        Debug.Log("Количество статов в словаре: " + stats.Count);
-
-        if (stats.Count == 0)
-        {
-            Debug.LogWarning("PlayerStats пустой!");
-            return;
-        }
+        if (stats.Count == 0) return;
 
         int index = 0;
         foreach (var kvp in stats)
         {
-            Debug.Log($"[ШАГ 1] Создаю кнопку для {kvp.Key} = {kvp.Value}");
-
-            if (skillButtonPrefab == null)
-            {
-                Debug.LogError("skillButtonPrefab НЕ назначен!");
-                return;
-            }
-
-            if (contentParent == null)
-            {
-                Debug.LogError("contentParent НЕ назначен!");
-                return;
-            }
-
             GameObject go = Instantiate(skillButtonPrefab, contentParent);
             spawnedButtons.Add(go);
-            Debug.Log($"[ШАГ 2] Префаб {skillButtonPrefab.name} заспавнен -> {go.name}");
 
             RectTransform rt = go.GetComponent<RectTransform>();
             if (rt != null)
             {
                 rt.anchoredPosition = new Vector2(0, startY + index * spacing);
                 rt.localScale = Vector3.one;
-                Debug.Log($"[ШАГ 3] RectTransform найден. Позиция: {rt.anchoredPosition}");
-            }
-            else
-            {
-                Debug.LogError($"[ОШИБКА] У объекта {go.name} нет RectTransform!");
             }
 
             SkillButtonUI ui = go.GetComponent<SkillButtonUI>();
             if (ui != null)
             {
-                Debug.Log($"[ШАГ 4] SkillButtonUI найден. Заполняю {kvp.Key} = {kvp.Value}");
-                ui.Setup(kvp.Key, kvp.Value);
+                bool canUpgrade = index >= 2; // первые два недоступны
+                ui.Setup(kvp.Key, kvp.Value, canUpgrade);
             }
             else
             {
-                Debug.LogError($"[ОШИБКА] У объекта {go.name} нет SkillButtonUI!");
+                Debug.LogError("На префабе кнопки нет SkillButtonUI!");
             }
 
             index++;
         }
-
-        Debug.Log("=== Конец обновления UI навыков ===");
     }
-
 
     private void ClearButtons()
     {

@@ -1,19 +1,23 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DiplomItem : MonoBehaviour
 {
-    [Header("������ �������")]
+    [Header("Данные диплома")]
     public string diplomaName;
     public Sprite icon;
-    public string[] startingSkills;
+    [TextArea(3, 6)] public string description; 
 
-    [Header("��������")]
+    [Header("Анимация")]
     public Transform focusPoint;
     private Vector3 originalPosition;
     private Vector3 originalScale;
     private bool isFocused = false;
     private float moveSpeed = 5f;
     private float scaleSpeed = 5f;
+
+    [Header("Hover эффект")]
+    public float hoverScaleFactor = 1.1f; // увеличение при наведении
+    private bool isHovered = false;
 
     void Start()
     {
@@ -23,15 +27,21 @@ public class DiplomItem : MonoBehaviour
 
     void Update()
     {
-        // ������� ����������� � focusPoint
+        // Плавное приближение к focusPoint
         Vector3 targetPos = isFocused ? focusPoint.position : originalPosition;
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * moveSpeed);
 
-        // ������� ���������������
-        Vector3 targetScale = isFocused ? originalScale * 1.5f : originalScale;
+        // Выбираем какую цель для масштаба применять
+        Vector3 targetScale = originalScale;
+
+        if (isFocused)
+            targetScale = originalScale * 1.5f;          // выбранный диплом увеличен сильнее
+        else if (isHovered)
+            targetScale = originalScale * hoverScaleFactor; // наведение мыши = небольшой "пульс"
+
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
 
-        // �������� ����� ����� Physics2D.Raycast
+        // Проверка клика через Physics2D.Raycast
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -46,7 +56,7 @@ public class DiplomItem : MonoBehaviour
     public void OnClick()
     {
         DiplomChoice.Instance.SelectDiploma(this);
-        Debug.Log("������ ������: " + diplomaName);
+        Debug.Log("Выбран диплом: " + diplomaName);
         Focus();
     }
 
@@ -58,5 +68,21 @@ public class DiplomItem : MonoBehaviour
     public void Unfocus()
     {
         isFocused = false;
+    }
+
+    // 🔹 Наведение мыши (для 2D объектов с коллайдером)
+    void OnMouseEnter()
+    {
+        if (!isFocused)
+        {
+            isHovered = true;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // курсор "рука" можно заменить, если есть спрайт
+        }
+    }
+
+    void OnMouseExit()
+    {
+        isHovered = false;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // возвращаем обычный курсор
     }
 }

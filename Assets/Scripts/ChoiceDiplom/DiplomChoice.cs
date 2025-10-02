@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +13,7 @@ public class DiplomChoice : MonoBehaviour
     public GameObject acceptButton;
 
     [Header("UI текст")]
-    public TMP_Text diplomaDesc;   // 🟢 сюда будем выводить описание
+    public TMP_Text diplomaDesc;
 
     private DiplomItem focusedDiploma;
 
@@ -22,7 +23,6 @@ public class DiplomChoice : MonoBehaviour
 
         if (backButton != null) backButton.SetActive(false);
         if (acceptButton != null) acceptButton.SetActive(false);
-
         if (diplomaDesc != null) diplomaDesc.text = "";
     }
 
@@ -42,8 +42,6 @@ public class DiplomChoice : MonoBehaviour
 
         if (backButton != null) backButton.SetActive(true);
         if (acceptButton != null) acceptButton.SetActive(true);
-
-        // 🟢 выводим описание в текстовый UI
         if (diplomaDesc != null) diplomaDesc.text = diploma.description;
     }
 
@@ -61,16 +59,23 @@ public class DiplomChoice : MonoBehaviour
 
         if (backButton != null) backButton.SetActive(false);
         if (acceptButton != null) acceptButton.SetActive(false);
-
-        if (diplomaDesc != null) diplomaDesc.text = ""; // очищаем текст
+        if (diplomaDesc != null) diplomaDesc.text = "";
     }
+
     public void AcceptSelection()
     {
-        if (focusedDiploma == null) return;
+        if (focusedDiploma != null && focusedDiploma.startStats != null)
+        {
+            Dictionary<string, int> diplomaStats = new Dictionary<string, int>();
+            foreach (var stat in focusedDiploma.startStats)
+            {
+                diplomaStats[stat.statName] = stat.value;
+            }
 
-        Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
+            // 🔹 сюда
+            PlayerStats.Instance.AddOrUpdateStats(diplomaStats);
 
-        // Замените "NextScene" на точное имя сцены, которую хотите загрузить
-        SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("SkillStart");
+        }
     }
 }

@@ -10,17 +10,20 @@ public class StatUI : MonoBehaviour
     public Button subtractButton;
 
     [HideInInspector]
-    public StatsSpawner.StatData statData; // ссылка на данные статы
+    public string statName;
+    [HideInInspector]
+    public int statValue;
 
     private StatsSpawner spawner;
 
-    public void Setup(string statName, int initialValue, StatsSpawner statsSpawner)
+    public void Setup(string name, int initialValue, StatsSpawner statsSpawner)
     {
-        statData = new StatsSpawner.StatData { name = statName, value = initialValue };
+        statName = name;
+        statValue = initialValue;
         spawner = statsSpawner;
 
         if (nameText != null) nameText.text = statName;
-        if (valueText != null) valueText.text = initialValue.ToString();
+        if (valueText != null) valueText.text = statValue.ToString();
 
         addButton.onClick.RemoveAllListeners();
         subtractButton.onClick.RemoveAllListeners();
@@ -33,23 +36,23 @@ public class StatUI : MonoBehaviour
     {
         if (spawner.totalPoints <= 0) return;
 
-        statData.value++;
+        statValue++;
         spawner.ChangePoints(-1);
         UpdateUI();
     }
 
     void RemovePoint()
     {
-        if (statData.value <= 0) return;
+        if (statValue <= 0) return;
 
-        statData.value--;
+        statValue--;
         spawner.ChangePoints(1);
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        if (valueText != null && statData != null)
-            valueText.text = statData.value.ToString();
+        if (valueText != null)
+            valueText.text = statValue.ToString();
     }
 }

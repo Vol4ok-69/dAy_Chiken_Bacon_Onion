@@ -13,7 +13,7 @@ public class DiplomChoice : MonoBehaviour
     public GameObject acceptButton;
 
     [Header("UI текст")]
-    public TMP_Text diplomaDesc;   // 🟢 сюда будем выводить описание
+    public TMP_Text diplomaDesc;
 
     private DiplomItem focusedDiploma;
 
@@ -23,7 +23,6 @@ public class DiplomChoice : MonoBehaviour
 
         if (backButton != null) backButton.SetActive(false);
         if (acceptButton != null) acceptButton.SetActive(false);
-
         if (diplomaDesc != null) diplomaDesc.text = "";
     }
 
@@ -43,8 +42,6 @@ public class DiplomChoice : MonoBehaviour
 
         if (backButton != null) backButton.SetActive(true);
         if (acceptButton != null) acceptButton.SetActive(true);
-
-        // 🟢 выводим описание в текстовый UI
         if (diplomaDesc != null) diplomaDesc.text = diploma.description;
     }
 
@@ -62,29 +59,23 @@ public class DiplomChoice : MonoBehaviour
 
         if (backButton != null) backButton.SetActive(false);
         if (acceptButton != null) acceptButton.SetActive(false);
-
-        if (diplomaDesc != null) diplomaDesc.text = ""; // очищаем текст
+        if (diplomaDesc != null) diplomaDesc.text = "";
     }
+
     public void AcceptSelection()
     {
-        if (focusedDiploma != null)
+        if (focusedDiploma != null && focusedDiploma.startStats != null)
         {
             Dictionary<string, int> diplomaStats = new Dictionary<string, int>();
-
             foreach (var stat in focusedDiploma.startStats)
             {
                 diplomaStats[stat.statName] = stat.value;
             }
 
-            PlayerStats.Instance.SetStats(diplomaStats);
+            // 🔹 сюда
+            PlayerStats.Instance.AddOrUpdateStats(diplomaStats);
 
-            Debug.Log("Выбран диплом: " + focusedDiploma.diplomaName);
-            foreach (var kvp in diplomaStats)
-            {
-                Debug.Log(kvp.Key + " = " + kvp.Value);
-            }
             SceneManager.LoadScene("SkillStart");
         }
     }
 }
-

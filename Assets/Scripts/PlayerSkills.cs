@@ -5,7 +5,6 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance;
 
-    //  Словарь для хранения параметров
     private Dictionary<string, int> stats = new Dictionary<string, int>();
 
     void Awake()
@@ -21,13 +20,19 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    // Установить стартовые значения (например, при выборе диплома)
-    public void SetStats(Dictionary<string, int> newStats)
+    // Добавляем или обновляем значения в словаре
+    public void AddOrUpdateStats(Dictionary<string, int> newStats)
     {
-        stats = new Dictionary<string, int>(newStats); // копируем, а не ссылаемся
+        foreach (var kvp in newStats)
+        {
+            if (stats.ContainsKey(kvp.Key))
+                stats[kvp.Key] = kvp.Value; // обновляем существующую стату
+            else
+                stats.Add(kvp.Key, kvp.Value); // добавляем новую
+        }
     }
 
-    // Получить значение
+    // Получить значение конкретной статы
     public int GetStat(string statName)
     {
         if (stats.ContainsKey(statName))
@@ -35,16 +40,16 @@ public class PlayerStats : MonoBehaviour
         return 0;
     }
 
-    // Изменить значение
+    // Получить все статы
+    public Dictionary<string, int> GetAllStats()
+    {
+        return new Dictionary<string, int>(stats);
+    }
+
+    // Изменить значение конкретной статы на amount
     public void ChangeStat(string statName, int amount)
     {
         if (stats.ContainsKey(statName))
             stats[statName] = Mathf.Clamp(stats[statName] + amount, 0, 100);
-    }
-
-    // Получить все параметры (например, для UI)
-    public Dictionary<string, int> GetAllStats()
-    {
-        return new Dictionary<string, int>(stats);
     }
 }

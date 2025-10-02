@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 using TMPro;
 
 public class StatsSpawner : MonoBehaviour
@@ -22,27 +22,28 @@ public class StatsSpawner : MonoBehaviour
     public float startY = 0f;
     public float spacing = -60f;
 
+    private StatUI[] spawnedUI;
+
     void Start()
     {
-        // Спавним UI для каждой статы
+        spawnedUI = new StatUI[statsData.Count];
+
         for (int i = 0; i < statsData.Count; i++)
         {
             StatData stat = statsData[i];
             GameObject go = Instantiate(statPrefab, contentParent);
             go.name = $"{statPrefab.name}_{i}";
 
-            // Сброс позиции и масштаб
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.localPosition = Vector3.zero;
             rt.localScale = Vector3.one;
             rt.anchoredPosition = new Vector2(0, startY + i * spacing);
 
-            // Настройка StatUI
             StatUI ui = go.GetComponent<StatUI>();
             if (ui != null)
             {
                 ui.Setup(stat.name, stat.value, this);
-                ui.statData = stat; // связываем с элементом statsData
+                spawnedUI[i] = ui; // сохраняем ссылку для последующего сохранения
             }
             else
             {
@@ -53,36 +54,34 @@ public class StatsSpawner : MonoBehaviour
         UpdatePointsUI();
     }
 
-    // Обновляем текст очков
     public void UpdatePointsUI()
     {
         if (pointsLeftText != null)
             pointsLeftText.text = $"Очки: {totalPoints}";
     }
 
-    // Метод для изменения очков
     public void ChangePoints(int amount)
     {
         totalPoints = Mathf.Clamp(totalPoints + amount, 0, 1000);
         UpdatePointsUI();
     }
 
-    // Сохраняем все значения в глобальный PlayerStats
-    public void SaveStatsToPlayer()
-    {
-        foreach (var stat in statsData)
-        {
-            PlayerStats.Instance.ChangeStat(stat.name, stat.value);
-        }
-
-        Debug.Log("Статы сцены добавлены в общую статистику игрока");
-    }
-
-    // Метод для кнопки "Принять"
     public void OnAcceptButtonClicked()
     {
-        SaveStatsToPlayer(); // сохраняем значения
-        // Переход на следующую сцену
+        // создаём словарь для передачи всех статов в PlayerStats
+        Dictionary<string, int> newStats = new Dictionary<string, int>();
+
+        foreach (var ui in spawnedUI)
+        {
+            if (ui != null)
+            {
+                newStats[ui.statName] = ui.statValue;
+            }
+        }
+
+        // добавляем/обновляем статы в PlayerStats без SetStat
+        PlayerStats.Instance.AddOrUpdateStats(newStats);
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
     }
 }

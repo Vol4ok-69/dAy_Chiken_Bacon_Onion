@@ -4,56 +4,83 @@ using UnityEngine.SceneManagement;
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Лампочка над игроком")]
-    public GameObject lampIcon; // ссылка на объект лампочки
+    public GameObject lampIcon; // лампочка над игроком
 
-    private string currentScene = ""; // активная сцена для перехода
+    [Header("UI панели (только для ZZRU)")]
+    public GameObject uiPanelZZRU; // UI объект для ZZRU
+
+    private string currentScene = ""; // текущая зона/сцена
+    private bool canUseE = false;    // доступность клавиши E
 
     private void Start()
     {
         if (lampIcon != null)
             lampIcon.SetActive(false);
+
+        if (uiPanelZZRU != null)
+            uiPanelZZRU.SetActive(false); // скрываем UI по умолчанию
     }
 
     /// <summary>
     /// Игрок входит в зону
     /// </summary>
-    public void EnterZone(string sceneName)
+    public void EnterZone(string zoneName)
     {
-        currentScene = sceneName;
+        currentScene = zoneName;
 
         if (lampIcon != null)
             lampIcon.SetActive(true); // включаем лампочку
 
-        Debug.Log("Клавиша E доступна для сцены: " + currentScene);
+        canUseE = true;
+        Debug.Log("E доступна для зоны: " + zoneName);
     }
 
     /// <summary>
     /// Игрок выходит из зоны
     /// </summary>
-    public void ExitZone(string sceneName)
+    public void ExitZone(string zoneName)
     {
-        if (currentScene == sceneName)
-        {
+        if (currentScene == zoneName)
             currentScene = "";
-            Debug.Log("Клавиша E больше не доступна");
-        }
 
         if (lampIcon != null)
             lampIcon.SetActive(false); // выключаем лампочку
+
+        canUseE = false;
+        Debug.Log("E больше не доступна");
     }
 
     private void Update()
     {
-        if (!string.IsNullOrEmpty(currentScene))
+        if (canUseE && Input.GetKeyDown(KeyCode.E))
         {
-            // Лог для проверки доступности клавиши E
-            Debug.Log("E доступна для сцены: " + currentScene);
-
-            if (Input.GetKeyDown(KeyCode.E))
+            if (!string.IsNullOrEmpty(currentScene))
             {
-                Debug.Log("Нажата E, загружаем сцену: " + currentScene);
-                SceneManager.LoadScene(currentScene);
+                // Если зона ZZRU — переключаем UI
+                if (currentScene == "ZZRU" && uiPanelZZRU != null)
+                {
+                    bool isActive = uiPanelZZRU.activeSelf;
+                    uiPanelZZRU.SetActive(!isActive);
+                    Debug.Log("UI ZZRU " + (isActive ? "скрыт" : "показан"));
+                }
+                else
+                {
+                    // Для остальных зон загружаем сцену
+                    SceneManager.LoadScene(currentScene);
+                }
             }
+        }
+    }
+
+    /// <summary>
+    /// Метод для кнопки UI, чтобы закрыть ZZRU (можно повесить на кнопку)
+    /// </summary>
+    public void CloseZZRU()
+    {
+        if (uiPanelZZRU != null)
+        {
+            uiPanelZZRU.SetActive(false);
+            Debug.Log("UI ZZRU закрыт кнопкой");
         }
     }
 }

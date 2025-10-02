@@ -1,25 +1,30 @@
 using UnityEngine;
 
-public class SceneTrigger : MonoBehaviour
+public class SceneTrigger2D : MonoBehaviour
 {
-    [Tooltip("Имя сцены для загрузки: ZZRU, inhouse, ingym")]
     public string sceneToLoad;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Character")) return;
+        Debug.Log("Вход в триггер: " + other.name);
 
-        var pi = other.GetComponent<PlayerInteraction>();
-        if (pi != null)
-            pi.EnterZone(sceneToLoad);
+        if (other.CompareTag("Character"))
+        {
+            var player = other.GetComponent<PlayerInteraction>();
+            if (player != null)
+                player.EnterZone(sceneToLoad);
+        }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Character")) return;
+        Debug.Log("Выход из триггера: " + other.name);
 
-        var pi = other.GetComponent<PlayerInteraction>();
-        if (pi != null)
-            pi.ExitZone(sceneToLoad);
+        if (other.CompareTag("Character"))
+        {
+            var player = other.GetComponent<PlayerInteraction>();
+            if (player != null)
+                player.ExitZone(sceneToLoad);
+        }
     }
 }

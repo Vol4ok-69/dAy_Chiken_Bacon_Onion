@@ -1790,7 +1790,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-      objectReference: {fileID: 374149365}
+    - target: {fileID: 5163892487146400871, guid: 921f5709ee5c4384bb2899662a1c4274, type: 3}
+      propertyPath: sceneName
+      value: SkillStart
+      objectReference: {fileID: 0}
     - target: {fileID: 7852277527420788646, guid: 921f5709ee5c4384bb2899662a1c4274, type: 3}
       propertyPath: m_Name
       value: SceneTransitionHandler
@@ -1911,3 +1914,5 @@ SceneRoots:
   - {fileID: 496267208}
   - {fileID: 2042708728050840168}
   - {fileID: 1993437971286694148}
+  - {fileID: 230793535}
+  - {fileID: 443793084}

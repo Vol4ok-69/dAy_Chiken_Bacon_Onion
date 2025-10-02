@@ -75,7 +75,17 @@ public class DiplomChoice : MonoBehaviour
                 diplomaStats[stat.statName] = stat.value;
             }
 
-        Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
-        }   
+            // 🔹 Сохраняем статы в PlayerStats
+            PlayerStats.Instance.AddOrUpdateStats(diplomaStats);
+
+            Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);
+            foreach (var kvp in diplomaStats)
+            {
+                Debug.Log(kvp.Key + " = " + kvp.Value);
+            }
+
+            SceneManager.LoadScene("SkillStart");
+        }
     }
+
 }

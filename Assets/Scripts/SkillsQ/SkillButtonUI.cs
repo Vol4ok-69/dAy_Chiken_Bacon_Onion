@@ -30,7 +30,7 @@ public class SkillButtonUI : MonoBehaviour
         }
         else
         {
-            plusButton.interactable = false; // отключаем кнопку
+            plusButton.interactable = false;
         }
     }
 

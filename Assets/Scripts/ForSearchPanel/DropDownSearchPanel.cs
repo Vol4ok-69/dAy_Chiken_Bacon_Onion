@@ -12,7 +12,6 @@ public class DropDownSearchPanel : MonoBehaviour
     
     public void OnButtonClick()
     {
-        // Проверяем активна ли кнопка и делаем наоборот
         if (_button.activeInHierarchy)
         {
             _button.SetActive(false);

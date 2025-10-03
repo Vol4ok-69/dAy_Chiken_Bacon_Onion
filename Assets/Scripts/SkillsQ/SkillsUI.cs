@@ -4,9 +4,9 @@ using UnityEngine;
 public class SkillsUI : MonoBehaviour
 {
     [Header("UI Настройки")]
-    public GameObject panel;              // Панель для навыков
-    public RectTransform contentParent;   // Родитель для кнопок (должен быть внутри Canvas)
-    public GameObject skillButtonPrefab;  // Префаб кнопки навыка
+    public GameObject panel;             
+    public RectTransform contentParent;   
+    public GameObject skillButtonPrefab;  
 
     [Header("Смещение кнопок")]
     public float startY = 0f;
@@ -64,7 +64,7 @@ public class SkillsUI : MonoBehaviour
             SkillButtonUI ui = go.GetComponent<SkillButtonUI>();
             if (ui != null)
             {
-                bool canUpgrade = index >= 2; // первые два недоступны
+                bool canUpgrade = index >= 2;
                 ui.Setup(kvp.Key, kvp.Value, canUpgrade);
             }
             else

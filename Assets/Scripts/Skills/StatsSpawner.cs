@@ -12,11 +12,11 @@ public class StatsSpawner : MonoBehaviour
     }
 
     [Header("Настройки")]
-    public List<StatData> statsData;          // список статов для этой сцены
-    public GameObject statPrefab;             // префаб UI для отдельной статы
-    public Transform contentParent;           // родительский объект для UI
-    public TextMeshProUGUI pointsLeftText;    // текст для оставшихся очков
-    public int totalPoints = 20;              // доступные очки
+    public List<StatData> statsData;
+    public GameObject statPrefab; 
+    public Transform contentParent;         
+    public TextMeshProUGUI pointsLeftText;    
+    public int totalPoints = 20;             
 
     [Header("Позиционирование")]
     public float startY = 0f;
@@ -43,7 +43,7 @@ public class StatsSpawner : MonoBehaviour
             if (ui != null)
             {
                 ui.Setup(stat.name, stat.value, this);
-                spawnedUI[i] = ui; // сохраняем ссылку для последующего сохранения
+                spawnedUI[i] = ui; 
             }
             else
             {
@@ -68,8 +68,7 @@ public class StatsSpawner : MonoBehaviour
 
     public void OnAcceptButtonClicked()
     {
-        // создаём словарь для передачи всех статов в PlayerStats
-        Dictionary<string, int> newStats = new Dictionary<string, int>();
+        Dictionary<string, int> newStats = new();
 
         foreach (var ui in spawnedUI)
         {
@@ -78,8 +77,6 @@ public class StatsSpawner : MonoBehaviour
                 newStats[ui.statName] = ui.statValue;
             }
         }
-
-        // добавляем/обновляем статы в PlayerStats без SetStat
         PlayerStats.Instance.AddOrUpdateStats(newStats);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");

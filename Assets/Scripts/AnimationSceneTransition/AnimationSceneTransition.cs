@@ -15,8 +15,7 @@ public class AnimationSceneTransition : MonoBehaviour
     
     private string targetSceneName;
     public bool isTransitioning = false;
-    
-    // События для отслеживания состояния перехода
+
     public System.Action OnTransitionStart;
     public System.Action OnTransitionComplete;
     public System.Action OnFadeInComplete;
@@ -24,19 +23,16 @@ public class AnimationSceneTransition : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             
-            // Автоматическое нахождение компонентов если не установлены
             if (transitionAnimator == null)
                 transitionAnimator = GetComponent<Animator>();
             if (fadePanel == null)
                 fadePanel = transform.GetChild(0).gameObject;
                 
-            // Скрываем панель в начале
             fadePanel.SetActive(false);
         }
         else
@@ -58,16 +54,14 @@ public class AnimationSceneTransition : MonoBehaviour
 {
     isTransitioning = true;
     OnTransitionStart?.Invoke();
-    
-    // Проверка на пустое имя сцены
+
     if (string.IsNullOrEmpty(targetSceneName))
     {
         Debug.LogError("Target scene name is empty!");
         isTransitioning = false;
         yield break;
     }
-    
-    // Активируем панель и запускаем затемнение
+
     if (fadePanel != null)
         fadePanel.SetActive(true);
         
@@ -77,20 +71,17 @@ public class AnimationSceneTransition : MonoBehaviour
         transitionAnimator.speed = transitionSpeed;
     }
     
-    // Ждем завершения FadeIn
     yield return new WaitForSeconds(GetAnimationLength("FadeIn") / transitionSpeed);
     
     OnFadeInComplete?.Invoke();
     
-    // ЗАГРУЗКА СЦЕНЫ С ПРОВЕРКАМИ:
     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetSceneName);
     
-    // Проверяем что asyncLoad не null
     if (asyncLoad == null)
     {
         Debug.LogError($"Failed to load scene: {targetSceneName}. Scene not found in build settings!");
         
-        // Осветляем экран обратно
+    
         if (transitionAnimator != null)
             transitionAnimator.SetTrigger("StartFadeOut");
             
@@ -103,33 +94,25 @@ public class AnimationSceneTransition : MonoBehaviour
         yield break;
     }
     
-    asyncLoad.allowSceneActivation = false; // ← БЫВШАЯ СТРОКА 76
+    asyncLoad.allowSceneActivation = false;
     
-    // Ждем загрузки
     while (!asyncLoad.isDone)
     {
-        // Проверяем прогресс загрузки
         if (asyncLoad.progress >= 0.9f)
-        {
-            // Когда загрузка почти завершена, активируем сцену
             asyncLoad.allowSceneActivation = true;
-        }
+        
         yield return null;
     }
     
-    // Ждем кадр для инициализации новой сцены
     yield return new WaitForEndOfFrame();
-    
-    // Запускаем осветление
+
     if (transitionAnimator != null)
         transitionAnimator.SetTrigger("StartFadeOut");
-    
-    // Ждем завершения FadeOut
+   
     yield return new WaitForSeconds(GetAnimationLength("FadeOut") / transitionSpeed);
     
     OnFadeOutComplete?.Invoke();
     
-    // Скрываем панель
     if (fadePanel != null)
         fadePanel.SetActive(false);
         
@@ -138,7 +121,6 @@ public class AnimationSceneTransition : MonoBehaviour
     isTransitioning = false;
 }
 
-    // Методы для ручного управления анимациями
     public void StartFadeIn()
     {
         transitionAnimator.SetTrigger("StartFadeIn");
@@ -151,7 +133,6 @@ public class AnimationSceneTransition : MonoBehaviour
         transitionAnimator.speed = transitionSpeed;
     }
 
-    // Получить длительность анимации
     private float GetAnimationLength(string animationName)
     {
         RuntimeAnimatorController runtimeController = transitionAnimator.runtimeAnimatorController;
@@ -162,18 +143,14 @@ public class AnimationSceneTransition : MonoBehaviour
                 return clip.length;
             }
         }
-        return 1f; // значение по умолчанию
+        return 1f;
     }
 
-    // Метод для вызова через Animation Event в конце FadeIn анимации
     public void OnFadeInAnimationComplete()
     {
-        // Можно использовать вместо корутины
     }
 
-    // Метод для вызова через Animation Event в конце FadeOut анимации
     public void OnFadeOutAnimationComplete()
     {
-        // Можно использовать вместо корутины
     }
 }

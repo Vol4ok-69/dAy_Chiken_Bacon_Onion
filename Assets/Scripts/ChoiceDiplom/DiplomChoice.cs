@@ -75,7 +75,6 @@ public class DiplomChoice : MonoBehaviour
                 diplomaStats[stat.statName] = stat.value;
             }
 
-            // 🔹 Сохраняем статы в PlayerStats
             PlayerStats.Instance.AddOrUpdateStats(diplomaStats);
 
             Debug.Log("Принят диплом: " + focusedDiploma.diplomaName);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    public TMP_Text statsText; // Ссылка на TMP Text в Canvas
+    public TMP_Text statsText;
 
     void Start()
     {
@@ -14,7 +14,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
             return;
         }
 
-        // Получаем все стартовые параметры
         var stats = PlayerStats.Instance.GetAllStats();
 
         StringBuilder sb = new StringBuilder();

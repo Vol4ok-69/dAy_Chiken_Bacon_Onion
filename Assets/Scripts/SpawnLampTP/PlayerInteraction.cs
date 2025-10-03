@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Лампочка над игроком")]
-    public GameObject lampIcon; // лампочка над игроком
+    public GameObject lampIcon;
 
     [Header("UI панели (только для ZZRU)")]
-    public GameObject uiPanelZZRU; // UI объект для ZZRU
+    public GameObject uiPanelZZRU;
 
-    private string currentScene = ""; // текущая зона/сцена
-    private bool canUseE = false;    // доступность клавиши E
+    private string currentScene = ""; 
+    private bool canUseE = false;   
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class PlayerInteraction : MonoBehaviour
             lampIcon.SetActive(false);
 
         if (uiPanelZZRU != null)
-            uiPanelZZRU.SetActive(false); // скрываем UI по умолчанию
+            uiPanelZZRU.SetActive(false); 
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class PlayerInteraction : MonoBehaviour
         currentScene = zoneName;
 
         if (lampIcon != null)
-            lampIcon.SetActive(true); // включаем лампочку
+            lampIcon.SetActive(true);
 
         canUseE = true;
         Debug.Log("E доступна для зоны: " + zoneName);
@@ -44,7 +44,7 @@ public class PlayerInteraction : MonoBehaviour
             currentScene = "";
 
         if (lampIcon != null)
-            lampIcon.SetActive(false); // выключаем лампочку
+            lampIcon.SetActive(false);
 
         canUseE = false;
         Debug.Log("E больше не доступна");
@@ -56,7 +56,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(currentScene))
             {
-                // Если зона ZZRU — переключаем UI
                 if (currentScene == "ZZRU" && uiPanelZZRU != null)
                 {
                     bool isActive = uiPanelZZRU.activeSelf;
@@ -65,7 +64,6 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 else
                 {
-                    // Для остальных зон загружаем сцену
                     SceneManager.LoadScene(currentScene);
                 }
             }
@@ -73,7 +71,7 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     /// <summary>
-    /// Метод для кнопки UI, чтобы закрыть ZZRU (можно повесить на кнопку)
+    /// Метод для кнопки UI, чтобы закрыть ZZRU
     /// </summary>
     public void CloseZZRU()
     {

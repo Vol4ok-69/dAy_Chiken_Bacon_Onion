@@ -5,16 +5,15 @@ using TMPro;
 public class ShowAllPlayerStats : MonoBehaviour
 {
     [Header("UI")]
-    public TMP_Text statsText;   // текст для вывода
-    public GameObject panel;     // панель, которую можно скрывать/показывать
+    public TMP_Text statsText;
+    public GameObject panel;
 
     void Start()
     {
         if (panel != null)
-            panel.SetActive(false); // скрываем панель по умолчанию
+            panel.SetActive(false);
     }
 
-    // Вызывается кнопкой через OnClick
     public void ShowStats()
     {
         if (panel != null)
@@ -22,7 +21,6 @@ public class ShowAllPlayerStats : MonoBehaviour
 
         if (statsText == null) return;
 
-        // Получаем все актуальные статы из PlayerStats
         var allStats = PlayerStats.Instance.GetAllStats();
 
         StringBuilder sb = new StringBuilder();
@@ -43,7 +41,6 @@ public class ShowAllPlayerStats : MonoBehaviour
         statsText.text = sb.ToString();
     }
 
-    // Дополнительно: скрыть панель
     public void HideStats()
     {
         if (panel != null)

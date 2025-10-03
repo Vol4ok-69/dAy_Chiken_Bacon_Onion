@@ -33,22 +33,19 @@ public class DiplomItem : MonoBehaviour
 
     void Update()
     {
-        // Плавное движение к focusPoint или возвращение
         Vector3 targetPos = isFocused ? focusPoint.position : originalPosition;
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * moveSpeed);
 
-        // Плавное масштабирование
         Vector3 targetScale;
         if (isFocused)
-            targetScale = originalScale * 1.5f;  // выбранный диплом
+            targetScale = originalScale * 1.5f;
         else if (isHovered)
-            targetScale = originalScale * 1.2f;  // при наведении
+            targetScale = originalScale * 1.2f;
         else
             targetScale = originalScale;
 
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
 
-        // Проверка клика
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

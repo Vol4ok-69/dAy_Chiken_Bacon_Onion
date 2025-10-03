@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class ShowAllStatsDebug : MonoBehaviour
 {
-    // Вызываем вывод при старте сцены
     void Start()
     {
         PrintAllStats();
     }
-
-    // Метод для вывода всех статов
     public void PrintAllStats()
     {
         Dictionary<string, int> allStats = PlayerStats.Instance.GetAllStats();

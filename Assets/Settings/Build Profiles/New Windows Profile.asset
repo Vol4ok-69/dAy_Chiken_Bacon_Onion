@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Subtarget: 2
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
-    rid: 1619033126830342225
+    rid: 2677554974370037837
   m_OverrideGlobalSceneList: 0
   m_Scenes: []
   m_ScriptingDefines: []
@@ -34,8 +34,8 @@ MonoBehaviour:
     - line: '|   targetDevice: 2'
     - line: '|   useOnDemandResources: 0'
     - line: '|   accelerometerFrequency: 60'
-    - line: '|   companyName: DefaultCompany'
-    - line: '|   productName: dAy_Chiken_Bacon_Onion'
+    - line: '|   companyName: "\u0427\u043E\u0442\u0438\u043D\u044C\u043A\u0438\u0435"'
+    - line: '|   productName: Chiken_Bacon_Onion'
     - line: '|   defaultCursor: {instanceID: 0}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b:
@@ -163,10 +163,8 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 1.0'
-    - line: '|   preloadedAssets:'
-    - line: '|   - {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100,
-        type: 3}'
+    - line: '|   bundleVersion: 1.1'
+    - line: '|   preloadedAssets: []'
     - line: '|   metroInputSource: 0'
     - line: '|   wsaTransparentSwapchain: 0'
     - line: '|   m_HolographicPauseOnTrackingLoss: 1'
@@ -312,48 +310,13 @@ MonoBehaviour:
     - line: '|   AndroidReportGooglePlayAppDependencies: 1'
     - line: '|   androidSymbolsSizeThreshold: 800'
     - line: '|   m_BuildTargetIcons:'
-    - line: '|   - m_BuildTarget: Standalone'
+    - line: '|   - m_BuildTarget: '
     - line: '|     m_Icons:'
     - line: '|     - serializedVersion: 2'
     - line: '|       m_Icon: {fileID: 2800000, guid: 3777c3cd8009af14b9963e53e9d737a6,
         type: 3}'
-    - line: '|       m_Width: 1024'
-    - line: '|       m_Height: 1024'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 512'
-    - line: '|       m_Height: 512'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 256'
-    - line: '|       m_Height: 256'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
     - line: '|       m_Width: 128'
     - line: '|       m_Height: 128'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 64'
-    - line: '|       m_Height: 64'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 48'
-    - line: '|       m_Height: 48'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 32'
-    - line: '|       m_Height: 32'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 16'
-    - line: '|       m_Height: 16'
     - line: '|       m_Kind: 0'
     - line: '|   m_BuildTargetPlatformIcons:'
     - line: '|   - m_BuildTarget: Android'
@@ -853,7 +816,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1619033126830342225
+    - rid: 2677554974370037837
       type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
       data:
         m_Development: 0
